@@ -1,6 +1,5 @@
 #!groovy
 
-def buildNumber = env.BUILD_NUMBER as int
 def mailTo = 'skvaknin@gmail.com'
 
 pipeline {
@@ -11,7 +10,6 @@ pipeline {
 	}
 
 	environment {
-      branch = "${env.GIT_BRANCH}"
 	  GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
 	}
 
