@@ -82,7 +82,7 @@ pipeline {
 						def success = false
 						def startTime = currentBuild.startTimeInMillis
 						def timeout = 120000 // 2 minutes
-						def interval = 10000 // 10 seconds
+						def interval = 50 // 10 seconds
 						while (!success && (currentBuild.startTimeInMillis - startTime) < timeout) {
 							try {
 								sh """	
