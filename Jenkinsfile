@@ -70,28 +70,36 @@ pipeline {
 		}
 
 		stage('verify hosts are reachable') {
-		steps {
-			script {
-			def success = false
-			def startTime = currentBuild.startTimeInMillis
-			def timeout = 120000 // 2 minutes
-			def interval = 10000 // 10 seconds
-			while (!success && (currentBuild.startTimeInMillis - startTime) < timeout) {
-				try {
-				sh """
-					ansible all -m ping
-				"""
-				success = true
-				} catch (Exception e) {
-				println "trying to reach host"
-				sleep interval
+			steps {
+				withCredentials([sshUserPrivateKey(credentialsId: "ec2-user", keyFileVariable: 'KEY')]) {
+					script {
+						access_ip = sh (
+						script: """
+							terraform output -raw web_app_access_ip
+						""", returnStdout: true
+						).trim()
+						env.IP = access_ip
+						def success = false
+						def startTime = currentBuild.startTimeInMillis
+						def timeout = 120000 // 2 minutes
+						def interval = 10000 // 10 seconds
+						while (!success && (currentBuild.startTimeInMillis - startTime) < timeout) {
+							try {
+								sh """	
+									ansible ${access_ip} -m ping --private-key=$KEY
+								"""
+								success = true
+							} catch (Exception e) {
+								println "trying to reach host"
+								sleep interval
+							}
+						}
+						if (!success) {
+							error "Timed out while trying to reach host"
+						}
+					}
 				}
 			}
-			if (!success) {
-				error "Timed out while trying to reach host"
-			}
-			}
-		}
 		}
 		
 		stage('install') {	
