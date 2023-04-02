@@ -15,9 +15,8 @@ provider "aws" {
 resource "aws_instance" "web_app" {
   ami           = var.ami
   instance_type = var.type
+  key_name      = "mac_23"
 }
-
-# }
 
 output "web_app_access_ip" {  
   value = aws_instance.web_app.public_ip
