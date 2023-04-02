@@ -71,7 +71,7 @@ pipeline {
 
 		stage('verify hosts are reachable') {
 			steps {
-				withCredentials([sshUserPrivateKey(credentialsId: "ec2-user", keyFileVariable: 'KEY')]) {
+				withCredentials([sshUserPrivateKey(credentialsId: "sshUserPrivateKey", keyFileVariable: 'KEY')]) {
 					script {
 						access_ip = sh (
 						script: """
