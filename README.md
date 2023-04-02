@@ -24,7 +24,7 @@ This was done by using GIT to manage my Terraform code. It allows me to track ch
 
 
 # Architecture
-![Versatile web app CI diagram](docs/versatile_ci_flow.png)
+![Versatile web app CI diagram](docs/Architecture.png)
 
 <br>
 Versatile web app  CICD flow involves the following stages: <br><br>

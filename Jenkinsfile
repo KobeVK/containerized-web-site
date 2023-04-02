@@ -1,6 +1,5 @@
 #!groovy
 
-def ENVIRONMENT = ""
 def buildNumber = env.BUILD_NUMBER as int
 def mailTo = 'skvaknin@gmail.com'
 
@@ -28,8 +27,6 @@ pipeline {
                     deleteDir()
 					cleanWs()
                     checkout scm
-					// abort a running Pipeline build if a new one is started
-                    // https://support.cloudbees.com/hc/en-us/articles/360034881371-How-can-I-abort-a-running-Pipeline-build-if-a-new-one-is-started-
                     if (buildNumber > 1) milestone(buildNumber - 1)
                     milestone(buildNumber)
                 }
@@ -50,14 +47,9 @@ pipeline {
 			steps {
                 withAWS(credentials: 'aws-access-key') {
 					script {
-						if (branch == 'main') {
 							env.ENVIRONMENT = 'production'
 							env.prevent_destroy = "true"
-							deployENV()
-						} else {
-							env.ENVIRONMENT = 'staging'
-							deployENV()	
-						}
+							deployENV("${params.AMI}","${params.region}","${params.instance_type}")
 					}
 				}
 			}
