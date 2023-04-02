@@ -1,0 +1,103 @@
+---
+ 
+    - hosts: all
+      gather_facts: no
+      user: ubuntu
+      connection: "ssh"
+      become: true
+
+    - name: Install and configure Docker
+      hosts: all
+      become: true
+      tasks:
+        - name: Update apt package lists
+          apt:
+            update_cache: true
+
+        - name: Install dependencies
+          apt:
+            name: "{{ packages }}"
+            state: present
+          vars:
+            packages:
+              - apt-transport-https
+              - ca-certificates
+              - curl
+              - software-properties-common
+
+        - name: Add Docker's official GPG key
+          apt_key:
+            url: https://download.docker.com/linux/ubuntu/gpg
+            state: present
+
+        - name: Add Docker's apt repository
+          apt_repository:
+            repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+            state: present
+
+        - name: Install Docker CE
+          apt:
+            name: docker-ce
+            state: present
+
+        - name: Install Python3.9
+          apt:
+            name: python3.9
+            state: present
+
+        - name: Install containerd.io and the Docker Compose plugin
+          apt:
+            name: "{{ packages }}"
+            state: present
+          vars:
+            packages:
+              - containerd.io
+              - docker-compose-plugin
+              - docker-compose
+
+        - name: Add user to the docker group
+          user:
+            name: ubuntu
+            group: docker
+            state: present
+
+        - name: Creates directory
+          file:
+            path: /home/ubuntu/Versatile/app
+            state: directory
+
+        - name: Copy necessary files
+          copy:
+            src: "{{ item }}"
+            dest: /home/ubuntu/Versatile/app
+            mode: 0644
+          with_items:
+            - app/app
+            - app/hello_world
+            - app/db.sqlite3
+            - app/manage.py
+        
+        - name: Copy necessary files2
+          copy:
+            src: "{{ item }}"
+            dest: /home/ubuntu/Versatile/
+            mode: 0644
+          with_items:
+            - Dockerfile
+            - docker-compose.yml
+            - requirements.txt
+            - entrypoint.sh
+
+        - name: create install python3-pip
+          command: apt install -y python3-pip
+        
+        - name: create virtualenv
+          become: true
+          command: apt install -y python3-virtualenv
+
+        - name: create django
+          command: pip install django
+      
+        - name: Go to the folder and execute command
+          command: docker-compose -f Versatile/docker-compose.yml up -d
+

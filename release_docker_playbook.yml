@@ -1,0 +1,25 @@
+---
+ 
+    - hosts: all
+      gather_facts: no
+      user: ubuntu
+      connection: "ssh"
+      become: true
+
+      tasks:
+        - name: Log into DockerHub
+          docker_login:
+            username: "{{ usr }}"
+            password: "{{ pass }}"
+
+        - name: docker commit
+          command: docker commit -m "building web-app" versatile versatile_web_app:"{{ buildNumber }}"
+
+        - name: docker tag
+          become: true
+          command: docker tag versatile_app sapkobisap/versatile:"{{ buildNumber }}"
+
+        - name: docker push
+          become: true
+          command: docker push sapkobisap/versatile:"{{ buildNumber }}"
+
