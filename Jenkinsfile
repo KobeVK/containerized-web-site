@@ -25,8 +25,6 @@ pipeline {
                     deleteDir()
 					cleanWs()
                     checkout scm
-                    if (buildNumber > 1) milestone(buildNumber - 1)
-                    milestone(buildNumber)
                 }
             }
         }
@@ -118,7 +116,6 @@ pipeline {
 						extraVars: [
 							usr: "${USERNAME}",
 							pass: "${PASSWORD}",
-							buildNumber: "${buildNumber}",
 							envioronment: "${env.ENVIRONMENT}"
 						]
 					)
@@ -144,7 +141,6 @@ pipeline {
 }
 
 def deployENV() {
-	def buildNumber = env.BUILD_NUMBER
 	sh """
 		echo "Starting Terraform init"
 		terraform init
@@ -154,7 +150,6 @@ def deployENV() {
 }
 
 def destroyENV(ami,region,type) {
-	def buildNumber = env.BUILD_NUMBER
 	sh """
 		sleep 600
 		echo "Starting Terraform destroy"
