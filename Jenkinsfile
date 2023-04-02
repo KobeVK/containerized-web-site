@@ -47,7 +47,6 @@ pipeline {
 			steps {
                 withAWS(credentials: 'aws-access-key') {
 					script {
-							env.ENVIRONMENT = 'production'
 							env.prevent_destroy = "true"
 							deployENV("${params.AMI}","${params.region}","${params.instance_type}")
 					}
@@ -151,17 +150,17 @@ def deployENV() {
 	sh """
 		echo "Starting Terraform init"
 		terraform init
-		terraform plan -out myplan -var="environment=${env.ENVIRONMENT}" -var="id=${buildNumber}"  
-		terraform apply -auto-approve -var="environment=${env.ENVIRONMENT}" -var="id=${buildNumber}"
+		terraform plan -out myplan -var="ami=${ami}" -var="region=${region}" -var="type=${type}"
+		terraform apply -auto-approve -var="ami=${ami}" -var="region=${region}" -var="type=${type}"
 	"""
 }
 
-def destroyENV() {
+def destroyENV(ami,region,type) {
 	def buildNumber = env.BUILD_NUMBER
 	sh """
 		sleep 600
 		echo "Starting Terraform destroy"
-		terraform destroy -auto-approve -var="environment=${env.ENVIRONMENT}" -var="id=${buildNumber}"
+		terraform destroy -auto-approve -var="ami=${ami}" -var="region=${region}" -var="type=${type}"
 	"""
 }
 
