@@ -5,9 +5,24 @@ def mailTo = 'skvaknin@gmail.com'
 pipeline {
 	agent any
 	parameters {
-		choice('region', ['us-west-1', 'us-east-1', 'eu-west-1', 'ap-southeast-2'], 'Select region.')
-		choice('ami', ['ami-0a887e401f7654935', 'ami-03d64741867e7a62c', 'ami-0b2f6494ff7a4d4b4', 'ami-0e4d4ad174dc9fca9'], 'Select AMI.')
-		choice('type', ['t2.micro', 'm5.large', 'c5.xlarge', 'r5.4xlarge'], 'Select the insctance type.')
+        choice(
+            name: 'region',
+            choices: ['us-west-1', 'us-east-1', 'eu-west-1', 'ap-southeast-2'],
+            description: 'Select region'
+        )
+        choice(
+            name: 'ami',
+            choices: ['ami-0a887e401f7654935', 'ami-03d64741867e7a62c', 'ami-0b2f6494ff7a4d4b4', 'ami-0e4d4ad174dc9fca9'],
+            description: 'Select AMI'
+        )
+        choice(
+            name: 'type',
+            choices: ['t2.micro', 'm5.large', 'c5.xlarge', 'r5.4xlarge'],
+            description: 'Select the insctance type'
+        )
+		// choice('region', ['us-west-1', 'us-east-1', 'eu-west-1', 'ap-southeast-2'], 'Select region.')
+		// choice('ami', ['ami-0a887e401f7654935', 'ami-03d64741867e7a62c', 'ami-0b2f6494ff7a4d4b4', 'ami-0e4d4ad174dc9fca9'], 'Select AMI.')
+		// choice('type', ['t2.micro', 'm5.large', 'c5.xlarge', 'r5.4xlarge'], 'Select the insctance type.')
 	}
 
 	environment {
