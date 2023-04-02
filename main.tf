@@ -1,3 +1,14 @@
+variable "ami" {
+  description = "The ID of the AMI to use for the instance"
+}
+variable "region" {
+  description = "The ID of the AMI to use for the instance"
+}
+variable "type" {
+  description = "The ID of the AMI to use for the instance"
+}
+
+
 provider "aws" {
   region     = var.region
 }
