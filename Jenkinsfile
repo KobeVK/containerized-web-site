@@ -8,12 +8,12 @@ pipeline {
 	parameters {
         choice(
             name: 'region',
-            choices: ['us-west-1', 'us-east-1', 'eu-west-1', 'ap-southeast-2'],
+            choices: ['eu-west-3', 'us-east-1', 'eu-west-1', 'ap-southeast-2'],
             description: 'Select region'
         )
         choice(
             name: 'ami',
-            choices: ['ami-0a887e401f7654935', 'ami-03d64741867e7a62c', 'ami-0b2f6494ff7a4d4b4', 'ami-0e4d4ad174dc9fca9'],
+            choices: ['ami-0a89a7563fc68be84'],
             description: 'Select AMI'
         )
         choice(

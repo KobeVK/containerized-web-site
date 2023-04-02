@@ -16,6 +16,7 @@ provider "aws" {
 resource "aws_instance" "web_app" {
   ami           = var.ami
   instance_type = var.type
+  # key_name      = "mac_23"
   # region        = var.region
 
   # lifecycle {
@@ -26,7 +27,6 @@ resource "aws_instance" "web_app" {
 # resource "aws_instance" "web_app" {
 #   ami           = "ami-0a89a7563fc68be84"
 #   instance_type = "t2.micro"
-#   key_name      = "mac_23"
 #   vpc_security_group_ids =  ["sg-0fdca7d4d5179465b"]
 
 
