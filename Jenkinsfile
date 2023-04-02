@@ -86,7 +86,7 @@ pipeline {
 						while (!success && (currentBuild.startTimeInMillis - startTime) < timeout) {
 							try {
 								sh """	
-									ansible ${access_ip} -m ping --private-key=$KEY
+									ansible all -m ping
 								"""
 								success = true
 							} catch (Exception e) {
