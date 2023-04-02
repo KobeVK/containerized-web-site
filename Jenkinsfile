@@ -69,26 +69,29 @@ pipeline {
 			}
 		}
 
-		stage('Verify') {	
-			steps {
-				withCredentials([sshUserPrivateKey(credentialsId: "aws", keyFileVariable: 'KEY')]) {
-					script{
-						access_ip = sh (
-							script: """
-								terraform output -raw web_app_access_ip
-							""", returnStdout: true
-						).trim()
-						env.IP = access_ip
-						println "the machine terraform created is  = " + access_ip
-						sh """
-							sudo -- sh -c "sed 's/.*ssh-rsa/${access_ip} ssh-rsa/' /home/ubuntu/.ssh/known_hosts > /dev/null"
-							sudo -- sh -c "echo ${access_ip} | sudo tee -a /home/ubuntu/Versatile/hosts > /dev/null "
-							sleep 60 
-							ansible ${access_ip} -m ping --private-key=$KEY
-						"""
-					}
+		stage('verify hosts are reachable') {
+		steps {
+			script {
+			def success = false
+			def startTime = currentBuild.startTimeInMillis
+			def timeout = 120000 // 2 minutes
+			def interval = 10000 // 10 seconds
+			while (!success && (currentBuild.startTimeInMillis - startTime) < timeout) {
+				try {
+				sh """
+					ansible all -m ping
+				"""
+				success = true
+				} catch (Exception e) {
+				println "trying to reach host"
+				sleep interval
 				}
 			}
+			if (!success) {
+				error "Timed out while trying to reach host"
+			}
+			}
+		}
 		}
 		
 		stage('install') {	
