@@ -16,6 +16,7 @@ resource "aws_instance" "web_app" {
   ami           = var.ami
   instance_type = var.type
   key_name      = "mac_23"
+  vpc_security_group_ids =  ["sg-0fdca7d4d5179465b"]
 }
 
 output "web_app_access_ip" {  
