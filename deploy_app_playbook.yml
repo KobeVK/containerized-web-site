@@ -113,8 +113,14 @@
         - name: create django
           command: pip install django
 
-        - name: create volumes
-          command: docker volume create --name=grafana-storage && docker volume create --name=grafana-log && docker volume create --name=prometheus_data
+        - name: create grafana-storage volumes
+          command: docker volume create --name=grafana-storage
+        
+        - name: create grafana-log
+          command: docker volume create --name=grafana-log
+        
+        - name: create prometheus_data volumes
+          command: docker volume create --name=prometheus_data
       
         - name: Go to the folder and execute command
           command: docker-compose -f Greenroad/docker-compose.yml up -d
