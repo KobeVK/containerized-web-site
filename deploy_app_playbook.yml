@@ -93,11 +93,11 @@
             - entrypoint.sh
 
         - name: Copy monitoring-related files
-          copy:
+          ansible.builtin.copy:
             src: "{{ item }}"
             dest: /home/ubuntu/Greenroad/provisioning
             mode: 0644
-          with_items:
+          with_fileglob:
             - prometheus.yml
             - provisioning/*
 
