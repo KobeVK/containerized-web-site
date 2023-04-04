@@ -26,7 +26,7 @@ output "web_app_access_ip" {
 resource "local_file" "inventory" {
   content = <<-EOT
     [myhosts]
-    ${aws_instance.web_app.public_ip} ansible_user=jenkins ansible_ssh_private_key_file=~/.ssh/mac_23.pem
+    ${aws_instance.web_app.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/mac_23.pem
   EOT
 
   filename = "/etc/ansible/hosts"

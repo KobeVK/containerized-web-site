@@ -10,7 +10,7 @@ Home assignment for creating a containerized web site with Python + Monitoring s
 
 
 # Project purpose
-DevOps Engineer Home Challenge for @Greenroad
+Senior DevOps Engineer Home Challenge for @Greenroad
 As part of this Home assignment, I was required to create a web-app, test and create useful CI flow along with monitoring system for the containerized enviornment and for the web-page
 
 important notes:
@@ -21,13 +21,11 @@ This was done by using GIT to manage my Terraform code. It allows me to track ch
 2.2 docker image<br>
 3. Emails on failed test<br>
 
-
-
 # Architecture
-![Versatile web app CI diagram](docs/Architecture.png)
+![Greenroad web app CI diagram](docs/Architecture.png)
 
 <br>
-Versatile web app  CICD flow involves the following stages: <br><br>
+Greenroad web app CICD flow involves the following stages: <br><br>
 
 1. `Deploy` <br>
 In this stage, we deploy an EC2 instance to aws, using terraform aws module<br>
