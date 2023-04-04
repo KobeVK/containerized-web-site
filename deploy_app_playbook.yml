@@ -65,7 +65,12 @@
             path: /home/ubuntu/Greenroad/app
             state: directory
 
-        - name: Copy necessary files
+        - name: Creates provisioning directory
+          file:
+            path: /home/ubuntu/Greenroad/provisioning
+            state: directory
+
+        - name: Copy app files
           copy:
             src: "{{ item }}"
             dest: /home/ubuntu/Greenroad/app
@@ -76,7 +81,7 @@
             - app/db.sqlite3
             - app/manage.py
         
-        - name: Copy necessary files2
+        - name: Copy docker-related files
           copy:
             src: "{{ item }}"
             dest: /home/ubuntu/Greenroad/
@@ -87,6 +92,17 @@
             - requirements.txt
             - entrypoint.sh
 
+        - name: Copy monitoring-related files
+          copy:
+            src: "{{ item }}"
+            dest: /home/ubuntu/Greenroad/provisioning
+            mode: 0644
+          with_items:
+            - prometheus.yml
+            - provisioning/dashboard.json
+            - provisioning/dashboards.yaml
+            - provisioning/datasources.yaml
+
         - name: create install python3-pip
           command: apt install -y python3-pip
         
@@ -96,6 +112,9 @@
 
         - name: create django
           command: pip install django
+
+        - name: create volumes
+          command: docker volume create --name=grafana-storage && docker volume create --name=grafana-log && docker volume create --name=prometheus_data
       
         - name: Go to the folder and execute command
           command: docker-compose -f Greenroad/docker-compose.yml up -d

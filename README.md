@@ -50,8 +50,8 @@ as for production, the
 
 # Deployment
 To deploy development enviornemt:
-1. Login to jenkins in http://13.38.117.100:8080/job/versatile-app-build-test-deploy/
-2. Go to versatile-app-build-test-deploy job
+1. Login to jenkins in http://xxxxxxxx:8080/job/deploy-ci/
+2. Go to deploy-ci job
 3. Press on your development branch
 4. Build with Parameters
 5. set Region and 'build'
@@ -62,8 +62,8 @@ Deployment to production will happen only after a succesful merge to main branch
     pre-requisites:
         docker | docker-compose | python | virtualenv | pip | git
 
-    git clone clone https://github.com/KobeVK/Versatile
-    cd Versatile && docker-compose up
+    git clone clone https://github.com/KobeVK/containerized-web-site
+    cd containerized-web-site && docker-compose up
 
 # The tests
 1. health check
@@ -71,7 +71,7 @@ Deployment to production will happen only after a succesful merge to main branch
 # Artifacts
 The product is the web-app containerized and pushed to docker hub.
 auto versioned by the Jenkins job number <br>
- https://hub.docker.com/r/sapkobisap/versatile   
+ https://hub.docker.com/r/sapkobisap/greenroad   
 
 # Future work
 1. Enable more parameters in Gitlab to support wider range of deployemt possibilites (not just free-tier EC2's)

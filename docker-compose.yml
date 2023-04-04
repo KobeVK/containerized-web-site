@@ -24,15 +24,16 @@ services:
     container_name: grafana
     ports:
       - "8080:3000"
-    depends_on:
-      - influxdb
     volumes:
       - grafana-storage:/var/lib/grafana
       - grafana-log:/var/log/grafana
+      - ./provisioning:/etc/grafana/provisioning
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=Welcome01
       - GF_PATHS_LOGS=/var/log/grafana
+    networks:
+      - monitoring
 
   prometheus:
     image: prom/prometheus:latest
@@ -49,6 +50,8 @@ services:
       - '--web.enable-lifecycle'
     expose:
       - 9090
+    ports:
+      - "9090:9090"
     networks:
       - monitoring
 
@@ -67,11 +70,15 @@ services:
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
     expose:
       - 9100
+    ports:
+      - "9100:9100"
     networks:
       - monitoring
 
 volumes:
   grafana-storage:
     external: true
-    volumes:
-  prometheus_data: {}
+  grafana-log:
+    external: true
+  prometheus_data:
+    external: true
