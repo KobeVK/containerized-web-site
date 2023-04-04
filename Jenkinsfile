@@ -104,7 +104,7 @@ pipeline {
 		
 		stage('install') {	
 			steps {
-				withCredentials([sshUserPrivateKey(credentialsId: "aws", keyFileVariable: 'KEY')]) {
+				withCredentials([sshUserPrivateKey(credentialsId: "sshUserPrivateKey", keyFileVariable: 'KEY')]) {
 					script{
 						sh """
 							ansible-playbook deploy_app_playbook.yml
