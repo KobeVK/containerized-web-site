@@ -35,9 +35,6 @@ This step verifies that the EC2 instance was created succesfully
 This step installs our web application on top of the EC2 using ansible whcih runs docker-compose to initiate a docker container that holds our web app <br>
 4. `Test` <br>
 This step tests the functionality of the web-app <br>
-5. `Release` <br>
-This step releases the image as artifact to dockerhub. <br>
-This image containes the latest of our code
 
 # Deployment
 To deploy development enviornemt:
@@ -45,24 +42,20 @@ To deploy development enviornemt:
 2. Go to deploy-ci job
 3. Press on your development branch
 4. Build with Parameters
-5. set Region and 'build'
+5. set Region, AMI, instanceType and 'build'
 
 ## Deploy locally (installing web-app only)
     pre-requisites:
-        docker | docker-compose | python | virtualenv | pip | git
-
+        docker | docker-compose | python | virtualenv | pip | git | docker volumes
     git clone clone https://github.com/KobeVK/containerized-web-site
     cd containerized-web-site && docker-compose.yml up -d
 
 # The tests
 1. a simple health check tests that returnes  200 OK if the site is up
 
-# Artifacts
-The product is the web-app containerized and pushed to docker hub.
-auto versioned by the Jenkins job number <br>
- https://hub.docker.com/r/sapkobisap/greenroad:tag
-
 # Future work
 1. Migrate to a microservice architecure
 2. Write pytests
+3. commit the docker and push it to docker hub
+auto versioned by the Jenkins job number <br>https://hub.docker.com/r/sapkobisap/greenroad:tag
 

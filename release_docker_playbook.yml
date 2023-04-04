@@ -13,7 +13,7 @@
             password: "{{ pass }}"
 
         - name: docker commit
-          command: docker commit -m "building web-app" Greenroad Greenroad_web_app:"{{ buildNumber }}"
+          command: docker commit -m "building web-app" Greenroad Greenroad_web_app:"{{ § }}"
 
         - name: docker tag
           become: true
