@@ -28,25 +28,16 @@ This was done by using GIT to manage my Terraform code. It allows me to track ch
 Greenroad web app CICD flow involves the following stages: <br><br>
 
 1. `Deploy` <br>
-In this stage, we deploy an EC2 instance to aws, using terraform aws module<br>
-2. `verify`<br>
-In this stage, we verify that the EC2 instance was created succesfully 
+This step deploys an EC2 instance to aws, using terraform aws module<br>
+2. `verify hosts are reachable	`<br>
+This step verifies that the EC2 instance was created succesfully 
 3. `Install` <br>
-In this stage, we install our web application on top of the EC2 using ansible whcih runs docker-compose to initiate a docker container that holds our web app <br>
+This step installs our web application on top of the EC2 using ansible whcih runs docker-compose to initiate a docker container that holds our web app <br>
 4. `Test` <br>
-In this stage, we test the functionality of the web-app <br>
-such as: <br>
-    4.1 Health Checks
-    4.2 Health Checks
-    4.3 Health Checks
+This step tests the functionality of the web-app <br>
 5. `Release` <br>
-In this stage, we release the image as artifact to dockerhub. <br>
+This step releases the image as artifact to dockerhub. <br>
 This image containes the latest of our code
-6. `Destroy`<br>
-On development branches only (pipelines that came from any other branch but `main`)
-the pipeline will kill the EC2 machine that was created after 10 minuets
-
-as for production, the 
 
 # Deployment
 To deploy development enviornemt:
@@ -56,26 +47,22 @@ To deploy development enviornemt:
 4. Build with Parameters
 5. set Region and 'build'
 
-Deployment to production will happen only after a succesful merge to main branch
-
 ## Deploy locally (installing web-app only)
     pre-requisites:
         docker | docker-compose | python | virtualenv | pip | git
 
     git clone clone https://github.com/KobeVK/containerized-web-site
-    cd containerized-web-site && docker-compose up
+    cd containerized-web-site && docker-compose.yml up -d
 
 # The tests
-1. health check
+1. a simple health check tests that returnes  200 OK if the site is up
 
 # Artifacts
 The product is the web-app containerized and pushed to docker hub.
 auto versioned by the Jenkins job number <br>
- https://hub.docker.com/r/sapkobisap/greenroad   
+ https://hub.docker.com/r/sapkobisap/greenroad:tag
 
 # Future work
-1. Enable more parameters in Gitlab to support wider range of deployemt possibilites (not just free-tier EC2's)
-2. Fix folder structure to better visibility (ansible files, TF files, Docker files)
-3. add proxy such as NginX
-4. Infrastructure tests (Load on server, high traffic, etc...)
-5. add Python unit tests, (maybe mock's with pupeteer...)
+1. Migrate to a microservice architecure
+2. Write pytests
+

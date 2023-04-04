@@ -124,4 +124,3 @@
       
         - name: Go to the folder and execute command
           command: docker-compose -f Greenroad/docker-compose.yml up -d
-
