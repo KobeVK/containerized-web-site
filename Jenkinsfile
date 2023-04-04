@@ -72,7 +72,7 @@ pipeline {
 		stage('verify hosts are reachable') {
 			steps {
 				withCredentials([sshUserPrivateKey(credentialsId: "sshUserPrivateKey", keyFileVariable: 'KEY')]) {
-:wq!					script {
+					script {
 						access_ip = sh (
 						script: """
 							terraform output -raw web_app_access_ip
