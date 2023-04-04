@@ -99,9 +99,7 @@
             mode: 0644
           with_items:
             - prometheus.yml
-            - provisioning/dashboards/dashboard.json
-            - provisioning/dashboards/dashboards.yaml
-            - provisioning/datasources/datasources.yaml
+            - provisioning/*
 
         - name: create install python3-pip
           command: apt install -y python3-pip
