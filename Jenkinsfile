@@ -132,6 +132,19 @@ pipeline {
 		    }	
 		}
 
+		// stage('Deploy Monitoring') {	
+		// 	steps {
+		// 		withCredentials([sshUserPrivateKey(credentialsId: "sshUserPrivateKey", keyFileVariable: 'KEY')]) {
+		// 			script{
+		// 				sh """
+		// 					ansible-playbook node_exporter.yml
+		// 					echo "your prometheus metrics can be seen here -> http://${env.IP}:9100/metrics"
+		// 				"""
+		// 			}
+		// 		}
+		// 	}
+		// }
+		
 		stage('Release') {
 			steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
@@ -153,11 +166,6 @@ pipeline {
 		}
 
 		stage('destroy image') {
-            when {
-                expression {
-                    branch != "main"
-                }
-            }
 			steps {
 				withCredentials([sshUserPrivateKey(credentialsId: "aws", keyFileVariable: 'KEY')]) {
 					script{

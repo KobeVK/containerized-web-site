@@ -17,9 +17,9 @@
 
         - name: docker tag
           become: true
-          command: docker tag Greenroad_app sapkobisap/Greenroad:"{{ buildNumber }}"
+          command: docker tag Greenroad_app sapkobisap/greenroad:"{{ buildNumber }}"
 
         - name: docker push
           become: true
-          command: docker push sapkobisap/Greenroad:"{{ buildNumber }}"
+          command: docker push sapkobisap/greenroad:"{{ buildNumber }}"
 
