@@ -107,7 +107,6 @@ pipeline {
 				withCredentials([sshUserPrivateKey(credentialsId: "aws", keyFileVariable: 'KEY')]) {
 					script{
 						sh """
-							sed -i 's/hosts: all/hosts: ${env.IP}/' deploy_app_playbook.yml > /dev/null 1>&2
 							ansible-playbook deploy_app_playbook.yml
 							echo "your deployed web-app can be access here -> http://${env.IP}:8000"
 						"""

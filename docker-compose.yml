@@ -7,9 +7,9 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./app:/home/ubuntu/Versatile/
+      - ./app:/home/ubuntu/Greenroad/
     command: sh -c "python3 manage.py runserver 0.0.0.0:8000"
     environment:
       - BUILD_NUMBER
       - ENVIRONMENT
-    container_name: versatile
+    container_name: Greenroad

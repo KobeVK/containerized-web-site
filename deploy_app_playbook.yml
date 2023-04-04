@@ -63,13 +63,13 @@
 
         - name: Creates directory
           file:
-            path: /home/ubuntu/Versatile/app
+            path: /home/ubuntu/Greenroad/app
             state: directory
 
         - name: Copy necessary files
           copy:
             src: "{{ item }}"
-            dest: /home/ubuntu/Versatile/app
+            dest: /home/ubuntu/Greenroad/app
             mode: 0644
           with_items:
             - app/app
@@ -80,7 +80,7 @@
         - name: Copy necessary files2
           copy:
             src: "{{ item }}"
-            dest: /home/ubuntu/Versatile/
+            dest: /home/ubuntu/Greenroad/
             mode: 0644
           with_items:
             - Dockerfile
@@ -99,5 +99,5 @@
           command: pip install django
       
         - name: Go to the folder and execute command
-          command: docker-compose -f Versatile/docker-compose.yml up -d
+          command: docker-compose -f Greenroad/docker-compose.yml up -d
 

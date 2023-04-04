@@ -13,13 +13,13 @@
             password: "{{ pass }}"
 
         - name: docker commit
-          command: docker commit -m "building web-app" versatile versatile_web_app:"{{ buildNumber }}"
+          command: docker commit -m "building web-app" Greenroad Greenroad_web_app:"{{ buildNumber }}"
 
         - name: docker tag
           become: true
-          command: docker tag versatile_app sapkobisap/versatile:"{{ buildNumber }}"
+          command: docker tag Greenroad_app sapkobisap/Greenroad:"{{ buildNumber }}"
 
         - name: docker push
           become: true
-          command: docker push sapkobisap/versatile:"{{ buildNumber }}"
+          command: docker push sapkobisap/Greenroad:"{{ buildNumber }}"
 
