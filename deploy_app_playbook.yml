@@ -70,6 +70,16 @@
             path: /home/ubuntu/Greenroad/provisioning
             state: directory
 
+        - name: Creates dashboards directory
+          file:
+            path: /home/ubuntu/Greenroad/provisioning/dashboards
+            state: directory
+
+        - name: Creates dashboards directory
+          file:
+            path: /home/ubuntu/Greenroad/provisioning/datasources
+            state: directory
+
         - name: Copy app files
           copy:
             src: "{{ item }}"
@@ -99,7 +109,23 @@
             mode: 0644
           with_fileglob:
             - prometheus.yml
-            - provisioning/*
+
+        - name: Copy monitoring-related files2
+          ansible.builtin.copy:
+            src: "{{ item }}"
+            dest: /home/ubuntu/Greenroad/provisioning/dashboards
+            mode: 0644
+          with_items:
+            - provisioning/dashboards/dashboards.yaml
+            - provisioning/dashboards/dashboard.json
+
+        - name: Copy monitoring-related files3
+          ansible.builtin.copy:
+            src: "{{ item }}"
+            dest: /home/ubuntu/Greenroad/provisioning/datasources
+            mode: 0644
+          with_items:
+            - provisioning/datasources/datasources.yaml
 
         - name: create install python3-pip
           command: apt install -y python3-pip

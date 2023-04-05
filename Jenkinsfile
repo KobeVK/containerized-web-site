@@ -134,7 +134,7 @@ pipeline {
 		
 		stage('destroy image') {
 			steps {
-				withCredentials([sshUserPrivateKey(credentialsId: "aws", keyFileVariable: 'KEY')]) {
+                withAWS(credentials: 'aws-access-key') {
 					script{
 						destroyENV()
 					}
